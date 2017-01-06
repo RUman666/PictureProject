@@ -1,9 +1,9 @@
-
 public class RPGBattle extends FlexiblePictureExplorer {
 
 	public RPGBattle(Picture backGround, Picture[] warriorSprites,
-			Picture[][] warriorMenu, Picture[] ninjaSprites, Picture[][] ninjaMenu,
-			Picture[] healerSprites, Picture[][] healerMenu) {
+			Picture[][] warriorMenu, Picture[] ninjaSprites,
+			Picture[][] ninjaMenu, Picture[] healerSprites,
+			Picture[][] healerMenu) {
 		super(backGround);
 		setTitle("RBG battle");
 		bg = backGround;
@@ -19,9 +19,9 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		setMenu();
 	}
 
-	Warrior war1;
-	Ninja nin1;
-	Healer heal1;
+	private Warrior war1;
+	private Ninja nin1;
+	private Healer heal1;
 
 	private Picture bg;
 	public int turn;
@@ -53,6 +53,18 @@ public class RPGBattle extends FlexiblePictureExplorer {
 			System.out.println("Healer HP: " + heal1.HP + "/" + heal1.maxHP);
 		}
 		setCharacters();
+	}
+
+	public Warrior getWar() {
+		return war1;
+	}
+
+	public Ninja getNin() {
+		return nin1;
+	}
+
+	public Healer getHeal() {
+		return heal1;
 	}
 
 	private int whichArea(Pixel pix) {
@@ -119,18 +131,19 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		Picture[] healerPics = { new Picture(basepath + "Person3Healthy.jpg"),
 				new Picture(basepath + "Person3Wounded.jpg"),
 				new Picture(basepath + "Person3Down.jpg") };
-		Picture[][] warriorMenu = { {new Picture(basepath + "FightButton.jpg"),
+		Picture[][] warriorMenu = { {
+				new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "TechButton.jpg")} };
-		Picture[][] ninjaMenu = { {new Picture(basepath + "FightButton.jpg"),
+				new Picture(basepath + "TechButton.jpg") } };
+		Picture[][] ninjaMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "TechButton.jpg")} };
-		Picture[][] healerMenu = { {new Picture(basepath + "FightButton.jpg"),
+				new Picture(basepath + "TechButton.jpg") } };
+		Picture[][] healerMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "HealButton.jpg")} };
+				new Picture(basepath + "HealButton.jpg") } };
 
 		Picture backGround = new Picture(basepath + "BackGround.jpg"); // BackGround
 																		// size:

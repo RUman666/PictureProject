@@ -11,10 +11,6 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		nin1 = new Ninja(ninjaSprites, ninjaMenu);
 		heal1 = new Healer(healerSprites, healerMenu);
 		turn = 1;
-
-		System.out.println("Warrior HP: " + war1.HP);
-		System.out.println("Ninja HP: " + nin1.HP);
-		System.out.println("Healer HP: " + heal1.HP);
 		setCharacters();
 		setMenu();
 	}
@@ -22,6 +18,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	private Warrior war1;
 	private Ninja nin1;
 	private Healer heal1;
+	private Wizard wiz1;
 
 	private Picture bg;
 	public int turn;
@@ -65,6 +62,10 @@ public class RPGBattle extends FlexiblePictureExplorer {
 
 	public Healer getHeal() {
 		return heal1;
+	}
+	
+	public Wizard getWiz() {
+		return wiz1;
 	}
 
 	private int whichArea(Pixel pix) {
@@ -148,7 +149,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		Picture backGround = new Picture(basepath + "BackGround.jpg"); // BackGround
 																		// size:
 																		// 500x500
-		RPGBattle battle = new RPGBattle(backGround, warriorPics, warriorMenu,
+		new RPGBattle(backGround, warriorPics, warriorMenu,
 				ninjaPics, ninjaMenu, healerPics, healerMenu);
 
 	}

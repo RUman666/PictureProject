@@ -3,7 +3,8 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	public RPGBattle(Picture backGround, Picture[] warriorSprites,
 			Picture[][] warriorMenu, Picture[] ninjaSprites,
 			Picture[][] ninjaMenu, Picture[] healerSprites,
-			Picture[][] healerMenu, Picture[] wizardSprites, Picture[][] wizardMenu) {
+			Picture[][] healerMenu, Picture[] wizardSprites, Picture[][] wizardMenu,
+			Picture[] enemyPics) {
 		super(backGround);
 		setTitle("RBG battle");
 		bg = backGround;
@@ -11,6 +12,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		nin1 = new Ninja(ninjaSprites, ninjaMenu);
 		heal1 = new Healer(healerSprites, healerMenu);
 		wiz1 = new Wizard(wizardSprites, wizardMenu);
+		enemy = new Enemy(enemyPics, 1);
 		turn = 1;
 		setCharacters();
 		setMenu();
@@ -20,6 +22,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	private Ninja nin1;
 	private Healer heal1;
 	private Wizard wiz1;
+	private Enemy enemy;
 
 	private Picture bg;
 	public int turn;
@@ -31,9 +34,15 @@ public class RPGBattle extends FlexiblePictureExplorer {
 
 	private void setCharacters() {
 		bg.copy(war1.getPic(), 200, 100);
+		drawFriendlyHP(war1, 100, 200);
 		bg.copy(nin1.getPic(), 250, 75);
+		drawFriendlyHP(nin1, 75, 250);
 		bg.copy(heal1.getPic(), 190, 25);
+		drawFriendlyHP(heal1, 25, 190);
 		bg.copy(wiz1.getPic(), 140, 75);
+		drawFriendlyHP(wiz1, 75, 140);
+		bg.copy(enemy.getPic(), 175, 250);
+		drawEnemyHP(enemy, 250, 175);
 	}
 
 	@Override
@@ -55,6 +64,10 @@ public class RPGBattle extends FlexiblePictureExplorer {
 			wiz1.tookHit(100);
 			System.out.println("Wizard HP: " + wiz1.HP + "/" + wiz1.maxHP);
 		}
+		if (area == 9){
+			enemy.tookHit(100);
+			System.out.println("Enemy HP: " + enemy.HP + "/" + enemy.maxHP);
+		}
 		setCharacters();
 	}
 
@@ -72,6 +85,58 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	
 	public Wizard getWiz() {
 		return wiz1;
+	}
+	
+	public Picture getBackGround(){
+		return bg;
+	}
+	
+	public RPGBattle get(){
+		return this;
+	}
+	
+	private void drawFriendlyHP(Friendly friend, int xcoord, int ycoord){
+		int last = xcoord;
+		Pixel storage;
+		for (int i = xcoord; i < xcoord + (50 * friend.HP / friend.maxHP); i++){
+			for (int j = ycoord - 10; j <= ycoord; j++){
+				storage = bg.getPixel(i, j);
+				storage.setBlue(0);
+				storage.setGreen(0);
+				storage.setRed(255);
+			}
+			last = i;
+		}
+		for (int i = last; i < xcoord + 50; i++){
+			for (int j = ycoord - 10; j <= ycoord; j++){
+				storage = bg.getPixel(i, j);
+				storage.setBlue(53);
+				storage.setRed(171);
+				storage.setGreen(211);
+			}
+		}
+	}
+	
+	public void drawEnemyHP(Enemy enemy, int xcoord, int ycoord){
+		int last = xcoord;
+		Pixel storage;
+		for (int i = xcoord; i < xcoord + (150 * enemy.HP / enemy.maxHP); i++){
+			for (int j = ycoord - 10; j <= ycoord; j++){
+				storage = bg.getPixel(i, j);
+				storage.setBlue(0);
+				storage.setGreen(0);
+				storage.setRed(255);
+			}
+			last = i;
+		}
+		for (int i = last; i < xcoord + 150; i++){
+			for (int j = ycoord - 10; j <= ycoord; j++){
+				storage = bg.getPixel(i, j);
+				storage.setBlue(53);
+				storage.setRed(171);
+				storage.setGreen(211);
+			}
+		}
 	}
 
 	private int whichArea(Pixel pix) {
@@ -100,6 +165,10 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		if (pix.getCol() > 75 && pix.getCol() < 125 && pix.getRow() > 140
 				&& pix.getRow() < 190)
 			output = 8;
+		if (pix.getCol() > 250 && pix.getCol() < 400 && pix.getRow() > 175
+			&& pix.getRow() < 275)
+			output = 9;
+			
 		return output;
 	}
 
@@ -143,8 +212,9 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				new Picture(basepath + "Person3Down.jpg") };
 		Picture[] wizardPics = { new Picture(basepath + "Person4Healthy.jpg"),
 				new Picture(basepath + "Person4Wounded.jpg"),
-				new Picture(basepath + "Person4Down.jpg")
-		};
+				new Picture(basepath + "Person4Down.jpg")};
+		Picture[] enemyPics = { new Picture(basepath + "Enemy1.jpg")};
+		
 		Picture[][] warriorMenu = { {
 				new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
@@ -168,7 +238,8 @@ public class RPGBattle extends FlexiblePictureExplorer {
 																		// size:
 																		// 500x500
 		new RPGBattle(backGround, warriorPics, warriorMenu,
-				ninjaPics, ninjaMenu, healerPics, healerMenu, wizardPics, wizardMenu);
+				ninjaPics, ninjaMenu, healerPics, healerMenu, wizardPics, wizardMenu,
+				enemyPics);
 
 	}
 

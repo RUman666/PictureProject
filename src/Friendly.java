@@ -4,6 +4,8 @@ public class Friendly extends Character{
 	Picture[][] abilityButtons;
 	
 	public int mag, vit, intel;
+	public boolean block;
+	private int menu;
 	Friendly(Picture[] Sprites, Picture[][] menuButtons) {
 		super(Sprites);
 		abilityButtons = new Picture[menuButtons.length][4];
@@ -29,4 +31,17 @@ public class Friendly extends Character{
 	public Picture[] sendMenu() {
 		return abilityButtons[0];
 	}
+	
+	public int tookHit(int enemyAtt){
+		int output = super.tookHit(enemyAtt);
+		if (block)
+			output = (int) (output * (2 / 3));
+		return output;
+	}
+	/*
+	public void drawHP() {
+		// TODO Auto-generated method stub
+		
+	}
+	*/
 }

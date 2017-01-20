@@ -1,11 +1,11 @@
 
-public class Friendly extends Character{
+public abstract class Friendly extends Character{
 	
 	Picture[][] abilityButtons;
 	
 	public int mag, vit, intel;
-	public boolean block;
 	private int menu;
+	public boolean block;
 	Friendly(Picture[] Sprites, Picture[][] menuButtons) {
 		super(Sprites);
 		abilityButtons = new Picture[menuButtons.length][4];
@@ -29,7 +29,11 @@ public class Friendly extends Character{
 	}
 
 	public Picture[] sendMenu() {
-		return abilityButtons[0];
+		return abilityButtons[menu];
+	}
+	
+	public void resetMenu(){
+		menu = 0;
 	}
 	
 	public int tookHit(int enemyAtt){
@@ -38,10 +42,12 @@ public class Friendly extends Character{
 			output = (int) (output * (2 / 3));
 		return output;
 	}
-	/*
-	public void drawHP() {
-		// TODO Auto-generated method stub
-		
+	
+	public void turn(RPGBattle battle, int area){
+		if (area == 1){
+			battle.getEnemy().tookHit(basicAttack());
+			battle.nextTurn();
+		}
 	}
-	*/
+	
 }

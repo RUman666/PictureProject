@@ -12,7 +12,11 @@ public class Wizard extends Friendly {
 		luck = (int) (Math.random() * 3 + 6);
 		def = (int) (Math.random() * 3 + 10);
 	}
-	
-	
+
+	@Override
+	public void turn(RPGBattle battle, int area) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

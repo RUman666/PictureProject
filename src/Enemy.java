@@ -1,3 +1,4 @@
+import java.lang.Math;
 public class Enemy extends Character {
 	
 	Picture currentEnemy;
@@ -18,28 +19,46 @@ public class Enemy extends Character {
 	public Picture getPic() {
 		return currentEnemy;
 	}
-	/*
-	public void drawHP(){
-		int storage;
-		for(int i = xcoord; i < (150 * HP / maxHP); i++){
-			for (int j = ycoord + 10; j > ycoord; j--){
-				Pixel red = battle.getBackGround().getPixel(i, j);
-				red.setBlue(0);
-				red.setGreen(0);
-				red.setRed(255);
+	
+	public void turn(RPGBattle battle, int area){ }
+	
+	public void turn(RPGBattle battle){
+		int war, wiz, nin, heal;
+		war = battle.getWar().HP;
+		wiz = battle.getWiz().HP;
+		nin = battle.getNin().HP;
+		heal = battle.getHeal().HP;
+		if (heal > 0 && heal < 100){
+			battle.getHeal().tookHit(basicAttack());
+		}else if (nin > 0 && nin < 100){
+			battle.getNin().tookHit(basicAttack());
+		}else if (wiz > 0 && wiz < 100){
+			battle.getWiz().tookHit(basicAttack());
+		}else if (war > 0 && war < 100){
+			battle.getWar().tookHit(basicAttack());
+		}else {
+			int output;
+			if (war > 0 && heal > 0 && wiz > 0 && nin > 0){
+				boolean valid = false;
+				while (!valid){
+					output = (int)(Math.random() * 4 + 1);
+					if (output == 1 && nin > 0){
+						battle.getNin().tookHit(basicAttack());
+						valid = true;
+					}else if (output == 2 && wiz > 0){
+						battle.getWiz().tookHit(basicAttack());
+						valid = true;
+					}else if (output == 3 && heal > 0){
+						battle.getHeal().tookHit(basicAttack());
+						valid = true;
+					}else if (output == 4 && war > 0){
+						battle.getWar().tookHit(basicAttack());
+						valid = true;
+					}
+				}
 			}
-			storage = i;
 		}
-		for (int i = storage; i < 400; i++){
-			for (int j = ycoord + 10; i > ycoord; j--) {
-				Pixel green = battle.getBackGround().getPixel(i, j);
-				green.setBlue(53);
-				green.setRed(171);
-				green.setGreen(211);
-			}
-		}
-	}
-	*/
 
+	}
 	
 }

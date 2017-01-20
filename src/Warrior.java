@@ -11,4 +11,12 @@ public class Warrior extends Friendly {
 		luck = (int) (Math.random() * 3 + 7);
 		def = (int) (Math.random() * 3 + 15);
 	}
+
+	@Override
+	public void turn(RPGBattle battle, int area) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

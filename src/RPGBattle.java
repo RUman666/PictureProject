@@ -1,3 +1,4 @@
+import java.lang.Math;
 public class RPGBattle extends FlexiblePictureExplorer {
 
 	public RPGBattle(Picture backGround, Picture[] warriorSprites,
@@ -13,7 +14,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		heal1 = new Healer(healerSprites, healerMenu);
 		wiz1 = new Wizard(wizardSprites, wizardMenu);
 		enemy = new Enemy(enemyPics, 1);
-		turn = 1;
+		turn = 4;
 		setCharacters();
 		setMenu();
 	}
@@ -23,12 +24,15 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	private Healer heal1;
 	private Wizard wiz1;
 	private Enemy enemy;
+	
+	private Picture blankPointer = new Picture("IndependentPictures\\" + "Blank.jpg");
+	private Picture arrow = new Picture("IndependentPictures\\" + "Pointer.jpg");
 
 	private Picture bg;
 	public int turn;
 	public final int NINJA = 1;
-	public final int HEALER = 2;
-	public final int MAGE = 3;
+	public final int HEALER = 3;
+	public final int WIZARD = 2;
 	public final int WARRIOR = 4;
 	public final int ENEMY = 5;
 
@@ -43,12 +47,33 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		drawFriendlyHP(wiz1, 75, 140);
 		bg.copy(enemy.getPic(), 175, 250);
 		drawEnemyHP(enemy, 250, 175);
+		drawpointer();
+	}
+	
+	private void drawpointer(){
+		if (turn == WARRIOR) 
+			bg.copy(arrow, 180, 120); 
+		else 
+			bg.copy(blankPointer, 180, 120);
+		if (turn == NINJA)
+			bg.copy(arrow, 230, 95);
+		else
+			bg.copy(blankPointer, 230, 95);
+		if (turn == HEALER)
+			bg.copy(arrow, 170, 45);
+		else
+			bg.copy(blankPointer, 170, 45);
+		if (turn == WIZARD)
+			bg.copy(arrow, 120, 95);
+		else
+			bg.copy(blankPointer, 120, 95);
 	}
 
-	@Override
 	public void mouseClickedAction(DigitalPicture pict, Pixel pix) {
 		int area = whichArea(pix);
-		if (area == 5) {
+		/*
+		 if (area == 5) {
+		 
 			war1.tookHit(100);
 			System.out.println("Warrior HP: " + war1.HP + "/" + war1.maxHP);
 		}
@@ -69,6 +94,25 @@ public class RPGBattle extends FlexiblePictureExplorer {
 			System.out.println("Enemy HP: " + enemy.HP + "/" + enemy.maxHP);
 		}
 		setCharacters();
+		*/
+		if (turn == ENEMY){
+			enemy.turn(this);
+		}
+		if (turn == NINJA){
+			nin1.turn(this, area);
+		}
+		if (turn == WIZARD){
+			wiz1.turn(this, area);
+		}
+		if (turn == HEALER){
+			heal1.turn(this, area);
+		}
+		if (turn == WARRIOR){
+			war1.turn(this, area);
+		}
+		
+		setCharacters();
+		setMenu();
 	}
 
 	public Warrior getWar() {
@@ -87,12 +131,24 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		return wiz1;
 	}
 	
-	public Picture getBackGround(){
+	public Enemy getEnemy(){
+		return enemy;
+	}
+	
+	public Picture getBg(){
 		return bg;
 	}
 	
 	public RPGBattle get(){
 		return this;
+	}
+	
+	public void nextTurn(){
+		if (turn == ENEMY){
+			turn = NINJA;
+		}else {
+			turn++;
+		}
 	}
 	
 	private void drawFriendlyHP(Friendly friend, int xcoord, int ycoord){
@@ -185,6 +241,9 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		if (turn == HEALER) {
 			for (int i = 0; i < 4; i++)
 				output[i] = heal1.sendMenu()[i];
+		}if (turn == WIZARD || turn == ENEMY){
+			for (int i = 0; i < 4; i++)
+				output[i] = wiz1.sendMenu()[i];
 		}
 		return output;
 	}
@@ -219,7 +278,12 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "TechButton.jpg") } };
+				new Picture(basepath + "TechButton.jpg") },
+				{new Picture(basepath + "TechTest1.jpg"),
+				new Picture(basepath + "TechTest2.jpg"),
+				new Picture(basepath + "TechTest3.jpg"),
+				new Picture(basepath + "Techtest4.jpg")
+				}};
 		Picture[][] ninjaMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),

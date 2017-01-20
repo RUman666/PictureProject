@@ -30,6 +30,8 @@ public abstract class Character {
 	public int basicAttack() {
 		return (str * 15);
 	}
+	
+	public abstract void turn(RPGBattle battle, int area);
 
 	
 }

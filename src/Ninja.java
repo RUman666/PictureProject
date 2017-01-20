@@ -12,4 +12,13 @@ public class Ninja extends Friendly {
 		def = (int) (Math.random() * 3 + 8);
 	}
 
+	@Override
+	public void turn(RPGBattle battle, int area) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 }

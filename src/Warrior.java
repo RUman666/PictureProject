@@ -14,8 +14,25 @@ public class Warrior extends Friendly {
 
 	@Override
 	public void turn(RPGBattle battle, int area) {
-		// TODO Auto-generated method stub
-		
+		super.turn(battle, area);
+		if (menu == 2){
+			if (area == 0){
+				System.out.println("Pressed tech1");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 1){
+				System.out.println("Pressed tech2");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 2){
+				System.out.println("Pressed tech3");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 4){
+				resetMenu();
+				battle.setMenu(getMenu());
+			}
+		}
 	}
 
 	

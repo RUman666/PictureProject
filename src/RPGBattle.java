@@ -1,4 +1,3 @@
-import java.lang.Math;
 public class RPGBattle extends FlexiblePictureExplorer {
 
 	public RPGBattle(Picture backGround, Picture[] warriorSprites,
@@ -14,9 +13,9 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		heal1 = new Healer(healerSprites, healerMenu);
 		wiz1 = new Wizard(wizardSprites, wizardMenu);
 		enemy = new Enemy(enemyPics, 1);
-		turn = 4;
+		turn = 1;
 		setCharacters();
-		setMenu();
+		setMenu(nin1.getMenu());
 	}
 
 	private Warrior war1;
@@ -72,47 +71,56 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	public void mouseClickedAction(DigitalPicture pict, Pixel pix) {
 		int area = whichArea(pix);
 		/*
-		 if (area == 5) {
+		 if (area == 4) {
 		 
 			war1.tookHit(100);
 			System.out.println("Warrior HP: " + war1.HP + "/" + war1.maxHP);
 		}
-		if (area == 6) {
+		if (area == 5) {
 			nin1.tookHit(100);
 			System.out.println("Ninja HP: " + nin1.HP + "/" + nin1.maxHP);
 		}
-		if (area == 7) {
+		if (area == 6) {
 			heal1.tookHit(100);
 			System.out.println("Healer HP: " + heal1.HP + "/" + heal1.maxHP);
 		}
-		if (area == 8) {
+		if (area == 7) {
 			wiz1.tookHit(100);
 			System.out.println("Wizard HP: " + wiz1.HP + "/" + wiz1.maxHP);
 		}
-		if (area == 9){
+		if (area == 8){
 			enemy.tookHit(100);
 			System.out.println("Enemy HP: " + enemy.HP + "/" + enemy.maxHP);
 		}
 		setCharacters();
 		*/
-		if (turn == ENEMY){
+		if (turn == ENEMY && enemy.HP > 0){
 			enemy.turn(this);
+		}else {
+			nextTurn();
 		}
-		if (turn == NINJA){
+		if (turn == NINJA && nin1.HP > 0){
 			nin1.turn(this, area);
+		}else {
+			nextTurn();
 		}
-		if (turn == WIZARD){
+		if (turn == WIZARD && wiz1.HP > 0){
 			wiz1.turn(this, area);
+		}else {
+			nextTurn();
 		}
-		if (turn == HEALER){
+		if (turn == HEALER && heal1.HP > 0){
 			heal1.turn(this, area);
+		}else {
+			nextTurn();
 		}
-		if (turn == WARRIOR){
+		if (turn == WARRIOR && war1.HP > 0){
 			war1.turn(this, area);
+		}else {
+			nextTurn();
 		}
 		
 		setCharacters();
-		setMenu();
 	}
 
 	public Warrior getWar() {
@@ -196,66 +204,44 @@ public class RPGBattle extends FlexiblePictureExplorer {
 	}
 
 	private int whichArea(Pixel pix) {
-		int output = 0;
+		int output = -1;
 		if (pix.getCol() > 25 && pix.getCol() < 250 && pix.getRow() > 300
 				&& pix.getRow() < 400)
-			output = 1;
+			output = 0;
 		if (pix.getCol() > 250 && pix.getCol() < 475 && pix.getRow() > 300
 				&& pix.getRow() < 400)
-			output = 2;
+			output = 1;
 		if (pix.getCol() > 25 && pix.getCol() < 250 && pix.getRow() > 400
 				&& pix.getRow() < 500)
-			output = 3;
+			output = 2;
 		if (pix.getCol() > 250 && pix.getCol() < 475 && pix.getRow() > 400
 				&& pix.getRow() < 500)
-			output = 4;
+			output = 3;
 		if (pix.getCol() > 100 && pix.getCol() < 150 && pix.getRow() > 200
 				&& pix.getRow() < 250)
-			output = 5;
+			output = 4;
 		if (pix.getCol() > 75 && pix.getCol() < 125 && pix.getRow() > 250
 				&& pix.getRow() < 300)
-			output = 6;
+			output = 5;
 		if (pix.getCol() > 25 && pix.getCol() < 75 && pix.getRow() > 190
 				&& pix.getRow() < 240)
-			output = 7;
+			output = 6;
 		if (pix.getCol() > 75 && pix.getCol() < 125 && pix.getRow() > 140
 				&& pix.getRow() < 190)
-			output = 8;
+			output = 7;
 		if (pix.getCol() > 250 && pix.getCol() < 400 && pix.getRow() > 175
 			&& pix.getRow() < 275)
-			output = 9;
-			
+			output = 8;
+		System.out.println("Area: " + output);
 		return output;
 	}
 
-	public Picture[] getMenu() {
-		Picture[] output = new Picture[4];
-		if (turn == NINJA) {
-			for (int i = 0; i < 4; i++)
-				output[i] = nin1.sendMenu()[i];
-		}
-		if (turn == WARRIOR) {
-			for (int i = 0; i < 4; i++)
-				output[i] = war1.sendMenu()[i];
-		}
-		if (turn == HEALER) {
-			for (int i = 0; i < 4; i++)
-				output[i] = heal1.sendMenu()[i];
-		}if (turn == WIZARD || turn == ENEMY){
-			for (int i = 0; i < 4; i++)
-				output[i] = wiz1.sendMenu()[i];
-		}
-		return output;
-	}
 
-	private void setMenu() {
-		Picture[] display = new Picture[4];
-		for (int i = 0; i < 4; i++)
-			display[i] = getMenu()[i];
-		bg.copy(display[0], 300, 25);
-		bg.copy(display[1], 300, 250);
-		bg.copy(display[2], 400, 25);
-		bg.copy(display[3], 400, 250);
+	public void setMenu(Picture[] menu) {
+		bg.copy(menu[0], 300, 25);
+		bg.copy(menu[1], 300, 250);
+		bg.copy(menu[2], 400, 25);
+		bg.copy(menu[3], 400, 250);
 	}
 
 	public static void main(String[] args) {
@@ -279,15 +265,22 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
 				new Picture(basepath + "TechButton.jpg") },
+				//{},
 				{new Picture(basepath + "TechTest1.jpg"),
 				new Picture(basepath + "TechTest2.jpg"),
 				new Picture(basepath + "TechTest3.jpg"),
-				new Picture(basepath + "Techtest4.jpg")
+				new Picture(basepath + "BackButton.jpg")
 				}};
 		Picture[][] ninjaMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "TechButton.jpg") } };
+				new Picture(basepath + "TechButton.jpg") },
+				//{},
+				{new Picture(basepath + "TechTest1.jpg"),
+				new Picture(basepath + "TechTest2.jpg"),
+				new Picture(basepath + "TechTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg") }
+				};
 		Picture[][] healerMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),

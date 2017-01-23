@@ -4,8 +4,9 @@ public abstract class Friendly extends Character{
 	Picture[][] abilityButtons;
 	
 	public int mag, vit, intel;
-	private int menu;
+	public int menu;
 	public boolean block;
+	public boolean firstAction = true;
 	Friendly(Picture[] Sprites, Picture[][] menuButtons) {
 		super(Sprites);
 		abilityButtons = new Picture[menuButtons.length][4];
@@ -15,6 +16,7 @@ public abstract class Friendly extends Character{
 				abilityButtons[i][j] = menuButtons[i][j];
 			}
 		}
+		resetMenu();
 	}
 	
 	public Picture getPic() {
@@ -28,12 +30,16 @@ public abstract class Friendly extends Character{
 		return charPics[output];
 	}
 
-	public Picture[] sendMenu() {
+	public Picture[] getMenu() {
 		return abilityButtons[menu];
 	}
 	
 	public void resetMenu(){
 		menu = 0;
+	}
+	
+	public void resetTurn(){
+		firstAction = true;
 	}
 	
 	public int tookHit(int enemyAtt){
@@ -44,9 +50,41 @@ public abstract class Friendly extends Character{
 	}
 	
 	public void turn(RPGBattle battle, int area){
-		if (area == 1){
-			battle.getEnemy().tookHit(basicAttack());
-			battle.nextTurn();
+		if (firstAction){
+			block = false;
+			if (strUp > 0){
+				strUp--;
+			}if (strUp < 0){
+				strUp++;
+			}if (defUp > 0){
+				defUp--;
+			}if (defUp < 0){
+				defUp++;
+			}HP += (int)((double)(vit/50 * maxHP));
+			if (HP > maxHP){
+				HP = maxHP;
+			}
+		}
+		if (menu == 0){
+			if (area == 0){
+				battle.getEnemy().tookHit(basicAttack());
+				battle.setMenu(getMenu());
+				battle.nextTurn();
+				resetTurn();
+			}if (area == 1){
+				block = true;
+				battle.nextTurn();
+				battle.setMenu(getMenu());
+				resetTurn();
+			}if (area == 2){
+				menu = 1;
+				battle.setMenu(getMenu());
+				firstAction = false;
+			}if (area == 3){
+				menu = 2;
+				battle.setMenu(getMenu());
+				firstAction = false;
+			}
 		}
 	}
 	

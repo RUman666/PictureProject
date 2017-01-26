@@ -51,6 +51,8 @@ public abstract class Friendly extends Character{
 	
 	public void turn(RPGBattle battle, int area){
 		if (firstAction){
+			resetMenu();
+			battle.setMenu(getMenu());
 			block = false;
 			if (strUp > 0){
 				strUp--;
@@ -65,27 +67,7 @@ public abstract class Friendly extends Character{
 				HP = maxHP;
 			}
 		}
-		if (menu == 0){
-			if (area == 0){
-				battle.getEnemy().tookHit(basicAttack());
-				battle.setMenu(getMenu());
-				battle.nextTurn();
-				resetTurn();
-			}if (area == 1){
-				block = true;
-				battle.nextTurn();
-				battle.setMenu(getMenu());
-				resetTurn();
-			}if (area == 2){
-				menu = 1;
-				battle.setMenu(getMenu());
-				firstAction = false;
-			}if (area == 3){
-				menu = 2;
-				battle.setMenu(getMenu());
-				firstAction = false;
-			}
-		}
+		
 	}
 	
 }

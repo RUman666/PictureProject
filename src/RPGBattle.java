@@ -13,7 +13,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		heal1 = new Healer(healerSprites, healerMenu);
 		wiz1 = new Wizard(wizardSprites, wizardMenu);
 		enemy = new Enemy(enemyPics, 1);
-		turn = 1;
+		turn = WARRIOR;
 		setCharacters();
 		setMenu(nin1.getMenu());
 	}
@@ -68,6 +68,7 @@ public class RPGBattle extends FlexiblePictureExplorer {
 			bg.copy(blankPointer, 120, 95);
 	}
 
+
 	public void mouseClickedAction(DigitalPicture pict, Pixel pix) {
 		int area = whichArea(pix);
 		/*
@@ -94,30 +95,40 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		}
 		setCharacters();
 		*/
-		if (turn == ENEMY && enemy.HP > 0){
-			enemy.turn(this);
-		}else {
-			nextTurn();
+		if (turn == ENEMY){
+			if (enemy.HP > 0){
+				enemy.turn(this);
+			}else {
+				nextTurn();
+			}	
 		}
-		if (turn == NINJA && nin1.HP > 0){
+		else if (turn == NINJA){
+			if (nin1.HP > 0)
 			nin1.turn(this, area);
-		}else {
-			nextTurn();
+			else {
+				nextTurn();
+			}
 		}
-		if (turn == WIZARD && wiz1.HP > 0){
-			wiz1.turn(this, area);
-		}else {
-			nextTurn();
+		else if (turn == WIZARD){
+			if (wiz1.HP > 0){
+				wiz1.turn(this, area);
+			}else {
+				nextTurn();
+			}
 		}
-		if (turn == HEALER && heal1.HP > 0){
-			heal1.turn(this, area);
-		}else {
-			nextTurn();
+		else if (turn == HEALER){
+			if (heal1.HP > 0){
+				heal1.turn(this, area);
+			}else {
+				nextTurn();
+			}
 		}
-		if (turn == WARRIOR && war1.HP > 0){
-			war1.turn(this, area);
-		}else {
-			nextTurn();
+		else if (turn == WARRIOR){
+			if (war1.HP > 0){
+				war1.turn(this, area);
+			}else {
+				nextTurn();
+			}
 		}
 		
 		setCharacters();
@@ -232,7 +243,6 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		if (pix.getCol() > 250 && pix.getCol() < 400 && pix.getRow() > 175
 			&& pix.getRow() < 275)
 			output = 8;
-		System.out.println("Area: " + output);
 		return output;
 	}
 
@@ -265,7 +275,10 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
 				new Picture(basepath + "TechButton.jpg") },
-				//{},
+				{new Picture(basepath + "ItemTest1.jpg"),
+				new Picture(basepath + "ItemTest2.jpg"),
+				new Picture(basepath + "ItemTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg")},
 				{new Picture(basepath + "TechTest1.jpg"),
 				new Picture(basepath + "TechTest2.jpg"),
 				new Picture(basepath + "TechTest3.jpg"),
@@ -275,7 +288,10 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
 				new Picture(basepath + "TechButton.jpg") },
-				//{},
+				{new Picture(basepath + "ItemTest1.jpg"),
+				new Picture(basepath + "ItemTest2.jpg"),
+				new Picture(basepath + "ItemTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg")},
 				{new Picture(basepath + "TechTest1.jpg"),
 				new Picture(basepath + "TechTest2.jpg"),
 				new Picture(basepath + "TechTest3.jpg"),
@@ -284,12 +300,19 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		Picture[][] healerMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "HealButton.jpg") } };
+				new Picture(basepath + "HealButton.jpg") },
+				{new Picture(basepath + "ItemTest1.jpg"),
+				new Picture(basepath + "ItemTest2.jpg"),
+				new Picture(basepath + "ItemTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg")}};
 		Picture[][] wizardMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
-				new Picture(basepath + "MagicButton.jpg")
-		} };
+				new Picture(basepath + "MagicButton.jpg")},
+				{new Picture(basepath + "ItemTest1.jpg"),
+				new Picture(basepath + "ItemTest2.jpg"),
+				new Picture(basepath + "ItemTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg")}};
 
 		Picture backGround = new Picture(basepath + "BackGround.jpg"); // BackGround
 																		// size:

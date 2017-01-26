@@ -58,6 +58,7 @@ public class Enemy extends Character {
 				}
 			}
 		}
+		battle.nextTurn();
 
 	}
 	

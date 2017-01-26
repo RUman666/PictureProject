@@ -15,8 +15,28 @@ public class Wizard extends Friendly {
 
 	@Override
 	public void turn(RPGBattle battle, int area) {
-		// TODO Auto-generated method stub
-		
+		super.turn(battle, area);
+		if (menu == 0){
+			if (area == 0){
+				battle.getEnemy().tookHit(basicAttack());
+				battle.setMenu(getMenu());
+				battle.nextTurn();
+				resetTurn();
+			}else if (area == 1){
+				block = true;
+				battle.nextTurn();
+				battle.setMenu(getMenu());
+				resetTurn();
+			}else if (area == 2){
+				menu = 1;
+				battle.setMenu(getMenu());
+				firstAction = false;
+			}else if (area == 3){
+				menu = 2;
+				battle.setMenu(getMenu());
+				firstAction = false;
+			}
+		}
 	}
 
 }

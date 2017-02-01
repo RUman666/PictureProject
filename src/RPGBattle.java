@@ -4,16 +4,16 @@ public class RPGBattle extends FlexiblePictureExplorer {
 			Picture[][] warriorMenu, Picture[] ninjaSprites,
 			Picture[][] ninjaMenu, Picture[] healerSprites,
 			Picture[][] healerMenu, Picture[] wizardSprites, Picture[][] wizardMenu,
-			Picture[] enemyPics) {
+			Picture[] enemyPics, Inventory inven) {
 		super(backGround);
 		setTitle("RBG battle");
 		bg = backGround;
-		war1 = new Warrior(warriorSprites, warriorMenu);
-		nin1 = new Ninja(ninjaSprites, ninjaMenu);
-		heal1 = new Healer(healerSprites, healerMenu);
-		wiz1 = new Wizard(wizardSprites, wizardMenu);
-		enemy = new Enemy(enemyPics, 1);
-		turn = WARRIOR;
+		war1 = new Warrior(warriorSprites, warriorMenu, inven, this);
+		nin1 = new Ninja(ninjaSprites, ninjaMenu, inven, this);
+		heal1 = new Healer(healerSprites, healerMenu, inven, this);
+		wiz1 = new Wizard(wizardSprites, wizardMenu, inven, this);
+		enemy = new Enemy(enemyPics, 1, this);
+		turn = NINJA;
 		setCharacters();
 		setMenu(nin1.getMenu());
 	}
@@ -97,35 +97,35 @@ public class RPGBattle extends FlexiblePictureExplorer {
 		*/
 		if (turn == ENEMY){
 			if (enemy.HP > 0){
-				enemy.turn(this);
+				enemy.turn();
 			}else {
 				nextTurn();
 			}	
 		}
 		else if (turn == NINJA){
 			if (nin1.HP > 0)
-			nin1.turn(this, area);
+			nin1.turn(area);
 			else {
 				nextTurn();
 			}
 		}
 		else if (turn == WIZARD){
 			if (wiz1.HP > 0){
-				wiz1.turn(this, area);
+				wiz1.turn(area);
 			}else {
 				nextTurn();
 			}
 		}
 		else if (turn == HEALER){
 			if (heal1.HP > 0){
-				heal1.turn(this, area);
+				heal1.turn(area);
 			}else {
 				nextTurn();
 			}
 		}
 		else if (turn == WARRIOR){
 			if (war1.HP > 0){
-				war1.turn(this, area);
+				war1.turn(area);
 			}else {
 				nextTurn();
 			}
@@ -304,7 +304,12 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				{new Picture(basepath + "ItemTest1.jpg"),
 				new Picture(basepath + "ItemTest2.jpg"),
 				new Picture(basepath + "ItemTest3.jpg"),
-				new Picture(basepath + "BackButton.jpg")}};
+				new Picture(basepath + "BackButton.jpg") },
+				{new Picture(basepath + "HealTest1.jpg"),
+				new Picture(basepath + "HealTest2.jpg"),
+				new Picture(basepath + "HealTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg") }
+				};
 		Picture[][] wizardMenu = { { new Picture(basepath + "FightButton.jpg"),
 				new Picture(basepath + "BlockButton.jpg"),
 				new Picture(basepath + "ItemButton.jpg"),
@@ -312,14 +317,19 @@ public class RPGBattle extends FlexiblePictureExplorer {
 				{new Picture(basepath + "ItemTest1.jpg"),
 				new Picture(basepath + "ItemTest2.jpg"),
 				new Picture(basepath + "ItemTest3.jpg"),
-				new Picture(basepath + "BackButton.jpg")}};
+				new Picture(basepath + "BackButton.jpg")},
+				{new Picture(basepath + "MagTest1.jpg"),
+				new Picture(basepath + "MagTest2.jpg"),
+				new Picture(basepath + "MagTest3.jpg"),
+				new Picture(basepath + "BackButton.jpg")
+				}};
 
 		Picture backGround = new Picture(basepath + "BackGround.jpg"); // BackGround
 																		// size:
 																		// 500x500
 		new RPGBattle(backGround, warriorPics, warriorMenu,
 				ninjaPics, ninjaMenu, healerPics, healerMenu, wizardPics, wizardMenu,
-				enemyPics);
+				enemyPics, new Inventory());
 
 	}
 

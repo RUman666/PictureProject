@@ -5,9 +5,8 @@ public class Enemy extends Character {
 	private int xcoord = 250;
 	private int ycoord = 175;
 	
-	RPGBattle battle;
-	Enemy(Picture[] Sprites, int level) {
-		super(Sprites);
+	Enemy(Picture[] Sprites, int level, RPGBattle init) {
+		super(Sprites, init);
 		currentEnemy = Sprites[level - 1];
 		maxHP = (int) (Math.random() * 500 + 1000 + (500 * level));
 		HP = maxHP;
@@ -20,9 +19,9 @@ public class Enemy extends Character {
 		return currentEnemy;
 	}
 	
-	public void turn(RPGBattle battle, int area){ }
+	public void turn(int area){ }
 	
-	public void turn(RPGBattle battle){
+	public void turn(){
 		int war, wiz, nin, heal;
 		war = battle.getWar().HP;
 		wiz = battle.getWiz().HP;

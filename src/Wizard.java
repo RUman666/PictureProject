@@ -1,8 +1,8 @@
 
 public class Wizard extends Friendly {
 
-	Wizard(Picture[] Sprites, Picture[][] menuButtons) {
-		super(Sprites, menuButtons);
+	Wizard(Picture[] Sprites, Picture[][] menuButtons, Inventory inven, RPGBattle init) {
+		super(Sprites, menuButtons, inven, init);
 		maxHP = (int) (Math.random() * 200 + 1000);
 		HP = maxHP;
 		str = (int) (Math.random() * 2 + 4);
@@ -14,8 +14,8 @@ public class Wizard extends Friendly {
 	}
 
 	@Override
-	public void turn(RPGBattle battle, int area) {
-		super.turn(battle, area);
+	public void turn(int area) {
+		super.turn(area);
 		if (menu == 0){
 			if (area == 0){
 				battle.getEnemy().tookHit(basicAttack());
@@ -28,13 +28,47 @@ public class Wizard extends Friendly {
 				battle.setMenu(getMenu());
 				resetTurn();
 			}else if (area == 2){
-				menu = 1;
-				battle.setMenu(getMenu());
-				firstAction = false;
-			}else if (area == 3){
 				menu = 2;
 				battle.setMenu(getMenu());
 				firstAction = false;
+			}else if (area == 3){
+				menu = 1;
+				battle.setMenu(getMenu());
+				firstAction = false;
+			}
+		}else if (menu == 2){
+			if (area == 0){
+				System.out.println("Pressed item1");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 1){
+				System.out.println("Pressed item2");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 2){
+				System.out.println("Pressed item3");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 3){
+				resetMenu();
+				battle.setMenu(getMenu());
+			}
+		}else if (menu == 1){
+			if (area == 0){
+				System.out.println("Pressed mag1");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 1){
+				System.out.println("Pressed mag2");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 2){
+				System.out.println("Pressed mag3");
+				resetMenu();
+				battle.nextTurn();
+			}if (area == 3){
+				resetMenu();
+				battle.setMenu(getMenu());
 			}
 		}
 	}

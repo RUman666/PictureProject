@@ -1,7 +1,7 @@
 public class Ninja extends Friendly {
 
-	Ninja(Picture[] Sprites, Picture[][] menuButtons) {
-		super(Sprites, menuButtons);
+	Ninja(Picture[] Sprites, Picture[][] menuButtons, Inventory inven, RPGBattle init) {
+		super(Sprites, menuButtons, inven, init);
 		maxHP = (int) (Math.random() * 200 + 800);
 		HP = maxHP;
 		str = (int) (Math.random() * 5 + 20);
@@ -13,8 +13,8 @@ public class Ninja extends Friendly {
 	}
 
 	@Override
-	public void turn(RPGBattle battle, int area) {
-		super.turn(battle, area);
+	public void turn(int area) {
+		super.turn(area);
 		if (menu == 0){
 			if (area == 0){
 				battle.getEnemy().tookHit(basicAttack());
@@ -27,15 +27,15 @@ public class Ninja extends Friendly {
 				battle.setMenu(getMenu());
 				resetTurn();
 			}else if (area == 2){
-				menu = 1;
-				battle.setMenu(getMenu());
-				firstAction = false;
-			}else if (area == 3){
 				menu = 2;
 				battle.setMenu(getMenu());
 				firstAction = false;
+			}else if (area == 3){
+				menu = 1;
+				battle.setMenu(getMenu());
+				firstAction = false;
 			}
-		}else if (menu == 1){
+		}else if (menu == 2){
 			if (area == 0){
 				System.out.println("Pressed item1");
 				resetMenu();
@@ -55,7 +55,7 @@ public class Ninja extends Friendly {
 				resetMenu();
 				battle.setMenu(getMenu());
 			}
-		}else if (menu == 2){
+		}else if (menu == 1){
 			if (area == 0){
 				System.out.println("Pressed tech1");
 				resetMenu();

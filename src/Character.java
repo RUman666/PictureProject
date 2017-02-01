@@ -3,16 +3,18 @@ import java.lang.Math;
 public abstract class Character {
 
 	Picture[] charPics;
+	RPGBattle battle;
 	
 	public int maxHP, HP, str, luck, def;
 	
 	public int strUp, defUp;
 
-	Character(Picture[] Sprites) {
+	Character(Picture[] Sprites, RPGBattle init) {
 		charPics = new Picture[Sprites.length];
 		for (int i = 0; i < charPics.length; i++) {
 			charPics[i] = Sprites[i];
 		}
+		battle = init;
 	}
 
 	public abstract Picture getPic();
@@ -31,7 +33,7 @@ public abstract class Character {
 		return (str * 15);
 	}
 	
-	public abstract void turn(RPGBattle battle, int area);
+	public abstract void turn(int area);
 
 	
 }

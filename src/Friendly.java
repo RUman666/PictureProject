@@ -2,13 +2,17 @@
 public abstract class Friendly extends Character{
 	
 	Picture[][] abilityButtons;
+	Picture[][] itemButtons;
 	
+	Inventory items;
 	public int mag, vit, intel;
 	public int menu;
 	public boolean block;
 	public boolean firstAction = true;
-	Friendly(Picture[] Sprites, Picture[][] menuButtons) {
-		super(Sprites);
+
+	
+	Friendly(Picture[] Sprites, Picture[][] menuButtons, Inventory inven, RPGBattle init) {
+		super(Sprites, init);
 		abilityButtons = new Picture[menuButtons.length][4];
 		for (int i = 0; i < abilityButtons.length; i++) {
 			abilityButtons[i] = new Picture[4];
@@ -17,6 +21,8 @@ public abstract class Friendly extends Character{
 			}
 		}
 		resetMenu();
+		items = inven;
+		battle = init;
 	}
 	
 	public Picture getPic() {
@@ -29,9 +35,15 @@ public abstract class Friendly extends Character{
 			output = 1;
 		return charPics[output];
 	}
+	
+	
 
 	public Picture[] getMenu() {
-		return abilityButtons[menu];
+		if (menu < 3){
+			return abilityButtons[menu];
+		}else {
+			return itemButtons[menu-3];
+		}
 	}
 	
 	public void resetMenu(){
@@ -49,7 +61,7 @@ public abstract class Friendly extends Character{
 		return output;
 	}
 	
-	public void turn(RPGBattle battle, int area){
+	public void turn(int area){
 		if (firstAction){
 			resetMenu();
 			battle.setMenu(getMenu());

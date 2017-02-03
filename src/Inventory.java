@@ -7,6 +7,20 @@ public class Inventory {
 	private int smallMP;
 	private int bigMP;
 	
+	public final int REVIVE = 0;
+	public final int SMALLHP = 1;
+	public final int BIGHP = 2;
+	public final int SMALLMP = 3;
+	public final int BIGMP = 4;
+	public final int BACK = -1;
+	public final int NEXT = -2;
+	
+	private boolean reviveAdded = false;
+	private boolean smallHPAdded = false;
+	private boolean bigHPAdded = false;
+	private boolean smallMPAdded = false;
+	private boolean bigMPAdded = false;
+	
 	Inventory(){
 		revive = 2;
 		smallHP = 2;
@@ -28,7 +42,10 @@ public class Inventory {
 	Picture smallMP2 = new Picture(basepath + "SmallMP2.jpg");
 	Picture bigMP1 = new Picture(basepath + "BigMP1.jpg");
 	Picture bigMP2 = new Picture(basepath + "BigMP2.jpg");
+	Picture backButton = new Picture(basepath + "BackButton.jpg");
+	Picture nextButton = new Picture(basepath + "NextButton.jpg");
 	Picture[][] itemButtons;
+	int[][] itemStorage;
 	
 	public int getRevive(){return revive;}
 	public int getSmallHP(){return smallHP;}
@@ -59,7 +76,7 @@ public class Inventory {
 		return output;
 	}
 	
-	public Picture getbigMPPic(){
+	public Picture getBigMPPic(){
 		Picture output;
 		if (bigMP == 2){
 			output = bigMP2;
@@ -114,6 +131,12 @@ public class Inventory {
 	private void setItems(){
 		int itemsLeft = howMany();
 		int pages = 0;
+		if (revive == 0){reviveAdded = true;}
+		if (smallHP == 0){smallHPAdded = true;}
+		if (bigHP == 0){bigHPAdded = true;}
+		if (smallMP == 0){smallMPAdded = true;}
+		if (bigMP == 0){bigMPAdded = true;}
+		
 		for (int i = itemsLeft; i > 0;){
 			if (pages == 0 && i <= 3){
 				pages++;
@@ -127,11 +150,110 @@ public class Inventory {
 			}
 		}
 		itemButtons = new Picture[pages][4];
+		itemStorage = new int[pages][4];
 		for (int i = 0; i < pages; i++){
-			for (int j = 0; j < 4; j++){
-				if (itemsLeft > 3){
-					
-				}
+			int j = 0;
+			if (itemsLeft == 3){
+				if (!reviveAdded){
+					itemButtons[i][j] = getRevivePic();
+					itemStorage[i][j] = REVIVE;
+					reviveAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!smallHPAdded){
+					itemButtons[i][j] = getSmallHPPic();
+					itemStorage[i][j] = SMALLHP;
+					smallHPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!bigHPAdded){
+					itemButtons[i][j] = getBigHPPic();
+					itemStorage[i][j] = BIGHP;
+					bigHPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!smallMPAdded){
+					itemButtons[i][j] = getSmallMPPic();
+					itemStorage[i][j] = SMALLMP;
+					smallMPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!bigMPAdded){
+					itemButtons[i][j] = getBigMPPic();
+					itemStorage[i][j] = BIGMP;
+					bigMPAdded = true;
+					j++;
+					itemsLeft--;		
+				}itemButtons[i][3] = backButton;
+				itemStorage[i][3] = BACK;
+			}else if (itemsLeft > 3){
+				if (!reviveAdded && j < 2){
+					itemButtons[i][j] = getRevivePic();
+					itemStorage[i][j] = REVIVE;
+					reviveAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!smallHPAdded && j < 2){
+					itemButtons[i][j] = getSmallHPPic();
+					itemStorage[i][j] = SMALLHP;
+					smallHPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!bigHPAdded && j < 2){
+					itemButtons[i][j] = getBigHPPic();
+					itemStorage[i][j] = BIGHP;
+					bigHPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!smallMPAdded && j < 2){
+					itemButtons[i][j] = getSmallMPPic();
+					itemStorage[i][j] = SMALLMP;
+					smallMPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!bigMPAdded && j < 2){
+					itemButtons[i][j] = getBigMPPic();
+					itemStorage[i][j] = BIGMP;
+					bigMPAdded = true;
+					j++;
+					itemsLeft--;		
+				}itemButtons[i][2] = backButton;
+				itemStorage[i][2] = BACK;
+				itemButtons[i][3] = nextButton;
+				itemStorage[i][3] = NEXT;
+			}else if (itemsLeft < 3){
+				if (!reviveAdded && j < 2){
+					itemButtons[i][j] = getRevivePic();
+					itemStorage[i][j] = REVIVE;
+					reviveAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!smallHPAdded && j < 2){
+					itemButtons[i][j] = getSmallHPPic();
+					itemStorage[i][j] = SMALLHP;
+					smallHPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!bigHPAdded && j < 2){
+					itemButtons[i][j] = getBigHPPic();
+					itemStorage[i][j] = BIGHP;
+					bigHPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!smallMPAdded && j < 2){
+					itemButtons[i][j] = getSmallMPPic();
+					itemStorage[i][j] = SMALLMP;
+					smallMPAdded = true;
+					j++;
+					itemsLeft--;
+				}if (!bigMPAdded && j < 2){
+					itemButtons[i][j] = getBigMPPic();
+					itemStorage[i][j] = BIGMP;
+					bigMPAdded = true;
+					j++;
+					itemsLeft--;		
+				}itemButtons[i][2] = backButton;
+				itemButtons[i][3] = blankItem;
 			}
 		}
 	}
@@ -139,6 +261,10 @@ public class Inventory {
 	public Picture[][] getItemButtons(){
 		setItems();
 		return itemButtons;
+	}
+	
+	public int getItem(int page, int area){
+		return itemStorage[page][area];
 	}
 	
 }

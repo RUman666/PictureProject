@@ -2,7 +2,6 @@
 public abstract class Friendly extends Character{
 	
 	Picture[][] abilityButtons;
-	Picture[][] itemButtons;
 	
 	Inventory items;
 	public int mag, vit, intel;
@@ -39,10 +38,10 @@ public abstract class Friendly extends Character{
 	
 
 	public Picture[] getMenu() {
-		if (menu < 3){
+		if (menu < 2){
 			return abilityButtons[menu];
 		}else {
-			return itemButtons[menu-3];
+			return items.getItemButtons()[menu-2];
 		}
 	}
 	
@@ -79,7 +78,35 @@ public abstract class Friendly extends Character{
 				HP = maxHP;
 			}
 		}
-		
 	}
-	
+	public void useRevive(){
+		System.out.println("Used Revive");
+		resetMenu();
+		battle.nextTurn();
+		battle.setMenu(getMenu());
+	}
+	public void useSmallHP(){
+		System.out.println("Used SmallHP");
+		resetMenu();
+		battle.nextTurn();
+		battle.setMenu(getMenu());
+	}
+	public void useBigHP(){
+		System.out.println("Used BigHP");
+		resetMenu();
+		battle.nextTurn();
+		battle.setMenu(getMenu());
+	}	
+	public void useSmallMP(){
+		System.out.println("Used smallMP");
+		resetMenu();
+		battle.nextTurn();
+		battle.setMenu(getMenu());
+	}
+	public void useBigMP(){
+		System.out.println("Used BigMP");
+		resetMenu();
+		battle.nextTurn();
+		battle.setMenu(getMenu());
+	}
 }

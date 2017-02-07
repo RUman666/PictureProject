@@ -53,11 +53,18 @@ public abstract class Friendly extends Character{
 		firstAction = true;
 	}
 	
-	public int tookHit(int enemyAtt){
-		int output = super.tookHit(enemyAtt);
+	public void tookHit(int enemyAtt){
+		int chance = (int) (Math.random() * 100);
+		int output = enemyAtt;
+		output = (int) (output * (1.0 - (double) (def * 2.0 / 100.0)));
+		if (chance < luck)
+			output = 0;
 		if (block)
 			output = (int) (output * (2 / 3));
-		return output;
+		HP -= output;
+		if (battle.getHeal().HP <= 0 && battle.getNin().HP <= 0 && battle.getWiz().HP <= 0 && battle.getWar().HP <= 0){
+			battle.endGame();
+		}
 	}
 	
 	public void turn(int area){
@@ -81,30 +88,35 @@ public abstract class Friendly extends Character{
 	}
 	public void useRevive(){
 		System.out.println("Used Revive");
+		items.useRevive();
 		resetMenu();
 		battle.nextTurn();
 		battle.setMenu(getMenu());
 	}
 	public void useSmallHP(){
 		System.out.println("Used SmallHP");
+		items.useSmallHP();
 		resetMenu();
 		battle.nextTurn();
 		battle.setMenu(getMenu());
 	}
 	public void useBigHP(){
 		System.out.println("Used BigHP");
+		items.useBigHP();
 		resetMenu();
 		battle.nextTurn();
 		battle.setMenu(getMenu());
 	}	
 	public void useSmallMP(){
 		System.out.println("Used smallMP");
+		items.useSmallMP();
 		resetMenu();
 		battle.nextTurn();
 		battle.setMenu(getMenu());
 	}
 	public void useBigMP(){
 		System.out.println("Used BigMP");
+		items.useBigMP();
 		resetMenu();
 		battle.nextTurn();
 		battle.setMenu(getMenu());

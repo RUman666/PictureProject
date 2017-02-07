@@ -19,14 +19,13 @@ public abstract class Character {
 
 	public abstract Picture getPic();
 	
-	public int tookHit(int enemyAtt) {
+	public void tookHit(int enemyAtt) {
 		int chance = (int) (Math.random() * 100);
 		int output = enemyAtt;
 		output = (int) (output * (1.0 - (double) (def * 2.0 / 100.0)));
 		if (chance < luck)
 			output = 0;
 		HP -= output;
-		return output;
 	}
 
 	public int basicAttack() {

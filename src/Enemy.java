@@ -10,13 +10,24 @@ public class Enemy extends Character {
 		currentEnemy = Sprites[level - 1];
 		maxHP = (int) (Math.random() * 500 + 1000 + (500 * level));
 		HP = maxHP;
-		str = (int) (Math.random() * 10 + 65 + (10 * level));
+		str = (int) (Math.random() * 5 + 35 + (5 * level));
 		luck = (int) (Math.random() * 3 + 7 + (2 * level));
 		def = (int) (Math.random() * 3 + 15 + (2 * level));
 	}
 
 	public Picture getPic() {
 		return currentEnemy;
+	}
+	
+	public Picture[] getPics(){
+		return charPics;
+	}
+	
+	public void tookHit(int enemyAtt){
+		super.tookHit(enemyAtt);
+		if (HP <= 0){
+			battle.newEnemy();
+		}
 	}
 	
 	public void turn(int area){ }
@@ -43,22 +54,25 @@ public class Enemy extends Character {
 					output = (int)(Math.random() * 4 + 1);
 					if (output == 1 && nin > 0){
 						battle.getNin().tookHit(basicAttack());
+						System.out.println("Hit ninja");
 						valid = true;
 					}else if (output == 2 && wiz > 0){
 						battle.getWiz().tookHit(basicAttack());
+						System.out.println("Hit wizard");
 						valid = true;
 					}else if (output == 3 && heal > 0){
 						battle.getHeal().tookHit(basicAttack());
+						System.out.println("Hit healer");
 						valid = true;
 					}else if (output == 4 && war > 0){
 						battle.getWar().tookHit(basicAttack());
+						System.out.println("Hit warrior");
 						valid = true;
 					}
 				}
 			}
 		}
 		battle.nextTurn();
-
 	}
 	
 }

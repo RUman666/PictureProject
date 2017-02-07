@@ -7,20 +7,15 @@ public class Inventory {
 	private int smallMP;
 	private int bigMP;
 	
-	public final int REVIVE = 0;
-	public final int SMALLHP = 1;
-	public final int BIGHP = 2;
-	public final int SMALLMP = 3;
-	public final int BIGMP = 4;
+	public final int BLANK = 0;
+	public final int REVIVE = 1;
+	public final int SMALLHP = 2;
+	public final int BIGHP = 3;
+	public final int SMALLMP = 4;
+	public final int BIGMP = 5;
 	public final int BACK = -1;
 	public final int NEXT = -2;
-	
-	private boolean reviveAdded = false;
-	private boolean smallHPAdded = false;
-	private boolean bigHPAdded = false;
-	private boolean smallMPAdded = false;
-	private boolean bigMPAdded = false;
-	
+
 	Inventory(){
 		revive = 2;
 		smallHP = 2;
@@ -47,11 +42,11 @@ public class Inventory {
 	Picture[][] itemButtons;
 	int[][] itemStorage;
 	
-	public int getRevive(){return revive;}
-	public int getSmallHP(){return smallHP;}
-	public int getBigHP(){return bigHP;}
-	public int getSmallMP(){return smallMP;}
-	public int getBigMP(){return bigMP;}
+	public void useRevive(){revive--;}
+	public void useSmallHP(){smallHP--;}
+	public void useBigHP(){bigHP--;}
+	public void useSmallMP(){smallMP--;}
+	public void useBigMP(){bigMP--;}
 	
 	public Picture getRevivePic(){
 		Picture output;
@@ -129,6 +124,13 @@ public class Inventory {
 	}
 	
 	private void setItems(){
+		
+		boolean reviveAdded = false;
+		boolean smallHPAdded = false;
+		boolean bigHPAdded = false;
+		boolean smallMPAdded = false;
+		boolean bigMPAdded = false;
+		
 		int itemsLeft = howMany();
 		int pages = 0;
 		if (revive == 0){reviveAdded = true;}
@@ -253,7 +255,9 @@ public class Inventory {
 					j++;
 					itemsLeft--;		
 				}itemButtons[i][2] = backButton;
+				itemStorage[i][2] = BACK;
 				itemButtons[i][3] = blankItem;
+				itemStorage[i][3] = BLANK;
 			}
 		}
 	}
@@ -267,4 +271,6 @@ public class Inventory {
 		return itemStorage[page][area];
 	}
 	
+	
+
 }

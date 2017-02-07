@@ -35,23 +35,6 @@ public class Warrior extends Friendly {
 				battle.setMenu(getMenu());
 				firstAction = false;
 			}
-		}else if (menu == 2){
-			if (area == 0){
-				System.out.println("Pressed item1");
-				resetMenu();
-				battle.nextTurn();
-			}if (area == 1){
-				System.out.println("Pressed item2");
-				resetMenu();
-				battle.nextTurn();
-			}if (area == 2){
-				System.out.println("Pressed item3");
-				resetMenu();
-				battle.nextTurn();
-			}if (area == 3){
-				resetMenu();
-				battle.setMenu(getMenu());
-			}
 		}else if (menu == 1){
 			if (area == 0){
 				System.out.println("Pressed tech1");
@@ -67,6 +50,31 @@ public class Warrior extends Friendly {
 				battle.nextTurn();
 			}if (area == 3){
 				resetMenu();
+				battle.setMenu(getMenu());
+			}
+		}else if (menu >= 2){
+			
+			int whichItem = items.getItem(menu - 2, area);
+			if (whichItem == items.REVIVE){
+				useRevive();
+			}else if (whichItem == items.SMALLHP){
+				useSmallHP();
+			}else if (whichItem == items.BIGHP){
+				useBigHP();
+			}else if (whichItem == items.SMALLMP){
+				useSmallMP();
+			}else if (whichItem == items.BIGMP){
+				useBigMP();
+			}else if (whichItem == items.BACK){
+				if (menu == 2){
+					resetMenu();
+					battle.setMenu(getMenu());
+				}else{
+					menu--;
+					battle.setMenu(getMenu());
+				}
+			}else if (whichItem == items.NEXT){
+				menu++;
 				battle.setMenu(getMenu());
 			}
 		}
